@@ -10,8 +10,24 @@ import React, {
   Text,
   View
 } from 'react-native';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+GoogleSignin.configure({
+  iosClientId: "430891231916-hej7na4spktej6ofjofis7gphtlg5op3.apps.googleusercontent.com",
+  scopes: ["https://www.googleapis.com/auth/calendar"]
+});
 
 class DiaryList extends Component {
+  signIn() {
+    GoogleSignin.signIn()
+    .then((user) => {
+      console.log(user);
+      this.setState({user: user});
+    })
+    .catch((err) => {
+      console.log('WRONG SIGNIN', err);
+    })
+    .done();
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -25,7 +41,13 @@ class DiaryList extends Component {
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
-      </View>
+        <GoogleSigninButton
+            style={{width: 48, height: 48}}
+            size={GoogleSigninButton.Size.Icon}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={this.signIn.bind(this)}
+             />
+         </View>
     );
   }
 }
