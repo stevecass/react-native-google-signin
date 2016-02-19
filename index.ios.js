@@ -8,7 +8,8 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  TouchableHighlight,
+  View,
 } from 'react-native';
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 GoogleSignin.configure({
@@ -28,6 +29,20 @@ class DiaryList extends Component {
     })
     .done();
   }
+  onPressButton() {
+    console.log(this)
+    fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+      headers: {
+        "Authorization": "Bearer " + this.state.user.accessToken
+      }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      this.setState( {events: json } )
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -47,6 +62,11 @@ class DiaryList extends Component {
             color={GoogleSigninButton.Color.Dark}
             onPress={this.signIn.bind(this)}
              />
+          <TouchableHighlight onPress={this.onPressButton.bind(this)}>
+            <Text style={styles.instructions}>
+              Click here to grab calendar
+            </Text>
+          </TouchableHighlight>
          </View>
     );
   }
