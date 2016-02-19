@@ -46,28 +46,31 @@ class DiaryList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
+        </Text>
+        <Text style={styles.instructions}>
+          Click the button below to log in with your Google account. If you are already logged in you may not see the Google OAuth popup.
+          Your user details should be logged in Chrome.
         </Text>
         <GoogleSigninButton
             style={{width: 48, height: 48}}
             size={GoogleSigninButton.Size.Icon}
             color={GoogleSigninButton.Color.Dark}
             onPress={this.signIn.bind(this)}
-             />
-          <TouchableHighlight onPress={this.onPressButton.bind(this)}>
+        />
+        <Text style={styles.instructions}>
+          Once logged in, retrieve your primary calendar by clicking below.
+          Watch the Chrome JS console to see the result
+        </Text>
+
+        <TouchableHighlight onPress={this.onPressButton.bind(this)}>
             <Text style={styles.instructions}>
-              Click here to grab calendar
+              Click here to grab calendar events
             </Text>
           </TouchableHighlight>
-         </View>
+      </View>
     );
   }
 }
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    margin: 10,
   },
 });
 
